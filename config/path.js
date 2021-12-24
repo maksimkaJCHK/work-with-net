@@ -2,7 +2,8 @@ const path = {
   src: './src',
   public: './public',
   build: './public/js',
-  lib: './lib'
+  lib: './lib',
+  prelib: './prelib'
 }
 
 export default path;

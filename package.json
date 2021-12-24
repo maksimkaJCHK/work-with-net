@@ -1,10 +1,13 @@
 {
   "name": "work-with-net",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Library for work with net in browser",
   "main": "lib/work-with-net.js",
   "scripts": {
-    "build": "rollup -c ./config/rollup.config.js"
+    "prelib": "rollup -c ./config/rollup.prelib.config.js",
+    "buildlib": "rollup -c ./config/rollup.buildlib.config.js",
+    "ie": "rollup -c ./config/rollup.lib.ie.config.js",
+    "build": "npm run prelib && npm run buildlib && npm run ie"
   },
   "keywords": [
     "work with net",

@@ -6,9 +6,10 @@ import { sizeSnapshot } from "rollup-plugin-size-snapshot";
 import { visualizer } from 'rollup-plugin-visualizer';
 
 export default [{
+  // Стандартная библиотека, не все типы
   input: `${path.src}/standard.js`,
   output: {
-    file: `${path.lib}/work-with-net-standard.js`,
+    file: `${path.prelib}/work-with-net-standard.js`,
     name: 'work-with-net-standard',
     format: 'es',
     sourcemap: false,
@@ -27,7 +28,6 @@ export default [{
             "corejs": 3,
             "targets": {
               "chrome": "58",
-              //"edge": "11"
             }
           }
         ],
@@ -64,51 +64,10 @@ export default [{
     })
   ]
 }, {
-  // Для 11 IE может это кому-то и пригодится
-  input: `${path.lib}/work-with-net-standard.js`,
-  output: {
-    file: `${path.lib}/ie/work-with-net-standard.js`,
-    name: 'work-with-net-standard',
-    format: 'es',
-    sourcemap: false,
-  },
-  plugins: [
-    babel({
-      babelHelpers: 'bundled',
-      exclude: 'node_modules/**',
-      presets: [
-        [
-          "@babel/preset-env",
-          {
-            "debug": false,
-            "useBuiltIns": "entry",
-            "modules": false,
-            "corejs": 3,
-            "targets": {
-              "chrome": "58",
-              "ie": "11"
-            }
-          }
-        ],
-      ]
-    }),
-    terser({
-      mangle: {
-        module: true,
-        properties: true
-      },
-      compress: {
-        passes: 2
-      },
-    }),
-    sizeSnapshot(),
-    sizes(),
-  ]
-}, {
   // Все типы
   input: `${path.src}/fullTypes.js`,
   output: {
-    file: `${path.lib}/work-with-net.js`,
+    file: `${path.prelib}/work-with-net.js`,
     name: 'work-with-net',
     format: 'es',
     sourcemap: false,
@@ -127,7 +86,6 @@ export default [{
             "corejs": 3,
             "targets": {
               "chrome": "58",
-              //"edge": "11"
             }
           }
         ],
@@ -163,45 +121,5 @@ export default [{
       gzipSize: true,
     })
   ]
-}, {
-  // Для 11 IE может это кому-то и пригодится
-  input: `${path.lib}/work-with-net.js`,
-  output: {
-    file: `${path.lib}/ie/work-with-net.js`,
-    name: 'work-with-net',
-    format: 'es',
-    sourcemap: false,
-  },
-  plugins: [
-    babel({
-      babelHelpers: 'bundled',
-      exclude: 'node_modules/**',
-      presets: [
-        [
-          "@babel/preset-env",
-          {
-            "debug": false,
-            "useBuiltIns": "entry",
-            "modules": false,
-            "corejs": 3,
-            "targets": {
-              "chrome": "58",
-              "ie": "11"
-            }
-          }
-        ],
-      ]
-    }),
-    terser({
-      mangle: {
-        module: true,
-        properties: true
-      },
-      compress: {
-        passes: 2
-      },
-    }),
-    sizeSnapshot(),
-    sizes(),
-  ]
-}];
+},
+];
