@@ -9,7 +9,7 @@ import {
   downloadCSV,
 } from '../prelib/work-with-net.js';
 
-export {
+const workWithNet = {
   downloadFile,
   openFile,
   getFileExtension,
@@ -20,7 +20,7 @@ export {
   downloadCSV,
 };
 
-const workWithNet = {
+export {
   downloadFile,
   openFile,
   getFileExtension,

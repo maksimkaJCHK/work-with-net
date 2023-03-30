@@ -4,15 +4,15 @@
 
 Для того, чтобы установить данную библиотеку необходимо в консоли набрать "npm install work-with-net --save-dev". После установки вы можете подключать как саму библиотеку, так и конкретные ее модули.
 
-- Подключение отдельных модулей - import { downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode } from "work-with-net";
+- Подключение отдельных модулей - import { downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode, downloadCSV } from "work-with-net";
 - Или подключите всю библиотеку - import workWithNet from "work-with-net";
 
 По умолчанию моя библиотека содержит порядка 800 mime types, спасибо за это [Robert Kieffer](https://github.com/broofa/mime). Это достаточно много, но работать будет вообще для всего. Размер правда при этом будет около 40kb. Если же вам нужны стандартные расширения, то подключите самые распространенные типы:
 
-- Подключение отдельных модулей - import { downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode } from "work-with-net/lib/work-with-net-standard.js";
+- Подключение отдельных модулей - import { downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode, downloadCSV } from "work-with-net/lib/work-with-net-standard.js";
 - Или подключите всю библиотеку - import workWithNet from "work-with-net/lib/work-with-net-standard.js";
 
-При таком подключении размер будет 3kb. Тут только самые типовые расширения. Первоначально у меня стояла задача сделать чат для работы с менеджером, предполагалось, что пользователь через этот чат будет переписываться с менеджером, загружать или скачивать от него документы. Список расширений мне предоставили, я его не много дополнил. Давайте я его приложу:
+При таком подключении размер будет около 3kb. Тут только самые типовые расширения. Первоначально у меня стояла задача сделать чат для работы с менеджером, предполагалось, что пользователь через этот чат будет переписываться с менеджером, загружать или скачивать от него документы. Список расширений мне предоставили, я его не много дополнил. Давайте я его приложу:
 
 - "7z";
 - "gz";
@@ -58,7 +58,7 @@
 
 Если вам нужна поддержка IE 11 то подключите библиотеку следующим образом:
 
-- Подключение отдельных модулей - import { downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode } from "work-with-net/lib/ie/work-with-net-standard.js";
+- Подключение отдельных модулей - import { downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode, downloadCSV } from "work-with-net/lib/ie/work-with-net-standard.js";
 - Или подключите всю библиотеку - import workWithNet from "work-with-net/lib/ie/work-with-net-standard.js";
 
 Сразу хочу сказать, для 11 IE я не проверял, подключайте на свой риск.
@@ -95,6 +95,16 @@
 - workWithNet.base64Encode('Текст') - преобразует base64 в текст;
 - workWithNet.base64FileEncode('base64', 'media type', 'кодировка') - отобразить файл в формате base64.
 
+## Скачивание CSV-файла
+
+На первый взгляд это простая задача. Что может быть проще, чем сгенерить CSV на javascript-е? но когда я начал ее решать, у меня возникло много проблем.
+
+Первая проблема была с кодировкой. Все примеры в сети были с англоязычных форумов. У них все работало хорошо. В моем случае текст содержал кирилицу, в общем он не отображался как нужно в excel-е. После получаса поисков, решение я нашел, нужно было подставить 3 символа для BOM-кодировки.
+
+Вторая проблема заключалась в том, что текст был в одну колонку. Тут мне помогли ребята. В общем нужно было использовать в качестве разделителя ";".
+
+## work-with-net
+
 Library for working with data received from the network. Very often, when working with AJAX requests, we receive data in base64 format, or data in binary format. You won't be able to display them just like that. This library contains modules that convert file extensions to mime types, mime types to regular file extensions. Modules that allow you to download files received by an AJAX request, open this data in a new tab, work with base64.
 
 In order to install this library, you need to type "npm install work-with-net --save-dev" in the console. After installation, you can include both the library itself and its specific modules.
@@ -107,7 +117,7 @@ By default, my library contains about 800 mime types, thanks for that [Robert Ki
 - Connecting individual modules - import {downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode} from "work-with-net / lib / work-with-net-standard.js";
 - Or include the entire library - import workWithNet from "work-with-net / lib / work-with-net-standard.js";
 
-With this connection, the size will be 3kb. There are only the most typical extensions. Initially, my task was to make a chat for working with a manager, it was assumed that the user through this chat would correspond with the manager, upload or download documents from him. The list of extensions was provided to me, I did not add much to it. Let me attach it:
+With this connection, the size will be approx 3kb. There are only the most typical extensions. Initially, my task was to make a chat for working with a manager, it was assumed that the user through this chat would correspond with the manager, upload or download documents from him. The list of extensions was provided to me, I did not add much to it. Let me attach it:
 
 - "7z";
 - "gz";
