@@ -10,12 +10,12 @@ npm install work-with-net --save-dev
 
 После установки вы можете подключать как саму библиотеку, так и конкретные ее модули.
 
-- Подключение отдельных модулей - import { downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode, downloadCSV } from "work-with-net";
+- Подключение отдельных модулей - import { downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode, downloadCSV, convertBase64ToBinary } from "work-with-net";
 - Или подключите всю библиотеку - import workWithNet from "work-with-net";
 
 По умолчанию моя библиотека содержит порядка 800 mime types, спасибо за это [Robert Kieffer](https://github.com/broofa/mime). Это достаточно много, но работать будет вообще для всего. Размер правда при этом будет около 40kb. Если же вам нужны стандартные расширения, то подключите самые распространенные типы:
 
-- Подключение отдельных модулей - import { downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode, downloadCSV } from "work-with-net/lib/work-with-net-standard.js";
+- Подключение отдельных модулей - import { downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode, downloadCSV, convertBase64ToBinary } from "work-with-net/lib/work-with-net-standard.js";
 - Или подключите всю библиотеку - import workWithNet from "work-with-net/lib/work-with-net-standard.js";
 
 При таком подключении размер будет около 3kb. Тут только самые типовые расширения. Первоначально у меня стояла задача сделать чат для работы с менеджером, предполагалось, что пользователь через этот чат будет переписываться с менеджером, загружать или скачивать от него документы. Список расширений мне предоставили, я его не много дополнил. Давайте я его приложу:
@@ -64,7 +64,7 @@ npm install work-with-net --save-dev
 
 Если вам нужна поддержка IE 11 то подключите библиотеку следующим образом:
 
-- Подключение отдельных модулей - import { downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode, downloadCSV } from "work-with-net/lib/ie/work-with-net-standard.js";
+- Подключение отдельных модулей - import { downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode, downloadCSV, convertBase64ToBinary } from "work-with-net/lib/ie/work-with-net-standard.js";
 - Или подключите всю библиотеку - import workWithNet from "work-with-net/lib/ie/work-with-net-standard.js";
 
 Сразу хочу сказать, для 11 IE я не проверял, подключайте на свой риск.
@@ -89,17 +89,19 @@ npm install work-with-net --save-dev
 
 ## Работа с base64
 
-Для работы с base64 существуют следующие функции base64Code, base64Encode, base64FileEncode;
+Для работы с base64 существуют следующие функции base64Code, base64Encode, base64FileEncode, convertBase64ToBinary;
 
 - base64Code('Текст') - преобразует текст в формат base64, как правило это нужно если вы из формы пароль отправляете при регистрации. Но это не всегда нужно, но так бывает;
 - base64Encode('Текст') - преобразует base64 в текст, как правило если вы по AJAX-запросу получаете пароль, вам его нужно декодировать в обычный текст. Или галочка "запомнить меня", тут вам эта функция пригодится;
 - base64FileEncode('base64', 'media type', 'кодировка') - если вы по AJAX запросу получаете файл в формате base64, то первый аргумент данной функции это сам файл в формате base64. Media type, он должен приходить из заголовка ответа (Content-Type), и кодировки. В большинстве случаев вам так будут приходить картинки, поэтому если у вас картинка в формате "jpeg", то media type можно не указывать, он у меня стоит по умолчанию, кодировка тоже скорее всего будет "utf-8", поэтому эти параметры не обязательны. В редких случаях кодировка будет не "utf-8", и возможно в base64 вам придет pdf-файл. Тогда данные аргументы будут иметь значение.
+- convertBase64ToBinary('строка base64') - как можно понятно из названия, это нужно для преобразования base64 в двоичный файл. Однажды мне по одному API приходили картинки в формате base64. Мне нужно было вставить их в SVG, нарисовать там фигуры, и потом отправить эти фигуры вместе с картинкой. Картинку нужно было отправлять в двоичном виде. Если дополнительно использовать модуль downloadFile, то можно полученную картинку в формате base64 преобразовать в двоичный файл, и скачать ее.
 
 Если вы подключили библиотеку, а не отдельные модули, то:
 
 - workWithNet.base64Code('Текст') - преобразует текст в формат base64;
 - workWithNet.base64Encode('Текст') - преобразует base64 в текст;
 - workWithNet.base64FileEncode('base64', 'media type', 'кодировка') - отобразить файл в формате base64.
+- workWithNet.convertBase64ToBinary('строка base64') - для преобразования base64 в двоичный файл.
 
 ## Скачивание CSV-файла
 
@@ -151,12 +153,12 @@ npm install work-with-net --save-dev
 
 After installation, you can include both the library itself and its specific modules.
 
-- Connecting separate modules - import {downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode} from "work-with-net";
+- Connecting separate modules - import {downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode, downloadCSV, convertBase64ToBinary } from "work-with-net";
 - Or include the entire library - import workWithNet from "work-with-net";
 
 By default, my library contains about 800 mime types, thanks for that [Robert Kieffer](https://github.com/broofa/mime). That's a lot, but it will work for everything. The size, however, will be about 40kb. If you need standard extensions, then connect the most common types:
 
-- Connecting individual modules - import {downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode} from "work-with-net / lib / work-with-net-standard.js";
+- Connecting individual modules - import {downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode, downloadCSV, convertBase64ToBinary} from "work-with-net / lib / work-with-net-standard.js";
 - Or include the entire library - import workWithNet from "work-with-net / lib / work-with-net-standard.js";
 
 With this connection, the size will be approx 3kb. There are only the most typical extensions. Initially, my task was to make a chat for working with a manager, it was assumed that the user through this chat would correspond with the manager, upload or download documents from him. The list of extensions was provided to me, I did not add much to it. Let me attach it:
@@ -205,7 +207,7 @@ As you can see, these are the most common extensions for working with documents,
 
 If you need support for IE 11, then include the library as follows:
 
-- Connecting individual modules - import {downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode} from "work-with-net / lib / ie / work-with-net-standard.js";
+- Connecting individual modules - import {downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode, downloadCSV, convertBase64ToBinary} from "work-with-net / lib / ie / work-with-net-standard.js";
 - Or include the entire library - import workWithNet from "work-with-net / lib / ie / work-with-net-standard.js";
 
 I want to say right away that I did not check for 11 IE, connect at your own risk.
@@ -230,18 +232,19 @@ If you have included a library, and not individual modules, then:
 
 ## Working with base64
 
-To work with base64, the following functions are used: base64Code, base64Encode, base64FileEncode;
+To work with base64, the following functions are used: base64Code, base64Encode, base64FileEncode, convertBase64ToBinary;
 
 - base64Code('Text') - converts the text to base64 format, as a rule, this is necessary if you send a password from the form during registration. But this is not always necessary, but it happens;
 - base64Encode('Text') - converts base64 to text, as a rule, if you receive a password from an AJAX request, you need to decode it into plain text. Or a checkmark "remember me", here this function will come in handy;
 - base64FileEncode('base64', 'media type', 'encoding') - if you receive a file in base64 format by AJAX request, then the first argument to this function is the file itself in base64 format. Media type, it must come from the response header (Content-Type), and encoding. In most cases, you will receive pictures like this, so if you have a picture in the "jpeg" format, then the media type can be omitted, I have it by default, the encoding will most likely be "utf-8", so these parameters are not required. In rare cases, the encoding will not be "utf-8", and it is possible that you will receive a pdf file in base64. Then the given arguments will matter.
+- convertBase64ToBinary('base64 string') - as the name implies, this is necessary to convert base64 to a binary file. Once I received images in base64 format via one API. I needed to insert them into SVG, draw a shape there, and then send these shapes along with the picture. The picture had to be sent in binary form. If you add a file upload module, you can get the resulting image in base64 format, convert it to a binary file, and download it.
 
 If you have included a library, and not individual modules, then:
 
 - workWithNet.base64Code('Text') - converts text to base64 format;
 - workWithNet.base64Encode('Text') - converts base64 to text;
 - workWithNet.base64FileEncode('base64', 'media type', 'encoding') - display the file in base64 format.
-
+- workWithNet.convertBase64ToBinary('base64 string') - to convert base64 to binary.
 
 ## Download CSV file
 
