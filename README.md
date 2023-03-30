@@ -103,6 +103,18 @@
 
 Вторая проблема заключалась в том, что текст был в одну колонку. Тут мне помогли ребята. В общем нужно было использовать в качестве разделителя ";".
 
+В общем стало понятно, что это случай для моей библиотеки. Для того, чтобы сгенерить CSV-файл в моей библиотеке есть функция downloadCSV. Она принимает 2 параметра, массив массивов из которых я буду строить CSV-файл, и имя файла. Имя файла не обязательный параметр. Если его не задавать, будет подставлено время в милисекундах с 1970 года. Давайте я лучше покажу пример для наглядности.
+
+```import { downloadCSV } from 'work-with-net';
+const csvARR = [
+  [1, 2, 3],
+  ['какой-то текст 1', '"' + 'какой-то ; \\n текст 2' + '"', 'какой-то текст 3'],
+  [1, 2, 3],
+];
+
+downloadCSV(csv, 'example');
+```
+
 ## work-with-net
 
 Library for working with data received from the network. Very often, when working with AJAX requests, we receive data in base64 format, or data in binary format. You won't be able to display them just like that. This library contains modules that convert file extensions to mime types, mime types to regular file extensions. Modules that allow you to download files received by an AJAX request, open this data in a new tab, work with base64.
