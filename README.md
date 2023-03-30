@@ -2,7 +2,13 @@
 
 Библиотека для работы с данными получаемыми из сети. Очень часто при работе с AJAX-запросами мы получаем данные в формате base64, или данные в двоичном формате. Просто так отобразить их не получится. Данная библиотека содержит модули, которые преобразуют расширения файлов в mime types, mime types в обычные расширения файлов. Модулей, которые позволяют скачивать файлы приходящие через AJAX-запрос, открывать эти данные в новой вкладке, работа с base64.
 
-Для того, чтобы установить данную библиотеку необходимо в консоли набрать "npm install work-with-net --save-dev". После установки вы можете подключать как саму библиотеку, так и конкретные ее модули.
+Для того, чтобы установить данную библиотеку необходимо в консоли набрать:
+
+```
+npm install work-with-net --save-dev
+```
+
+После установки вы можете подключать как саму библиотеку, так и конкретные ее модули.
 
 - Подключение отдельных модулей - import { downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode, downloadCSV } from "work-with-net";
 - Или подключите всю библиотеку - import workWithNet from "work-with-net";
@@ -72,7 +78,7 @@
 
 ## Скачать файл из AJAX-запроса, или открыть его в новой вкладке.
 
-Если вы получаете файл из AJAX-запроса (в базе данных он лежит в двоичном виде, для его преобразования я использую blob). То для его скачивания используйте функцию downloadFile('файл в двоичном виде', 'mime type', 'имя файла'). Смотрите вам обязательно нужен сам файл, и его mime type. Mime type как правило лежит в заголовке ответа (Content-Type). Если имя файла не задать, то при скачивании имя файла будет содержать дату в милисекундах с 1970 года. Если вы что-то скачивали через портал гос. услуг, то там файлы качаются также. Если же вам нужно имя как-то конкретно генерить, то задайте 3 параметр, так он не обязателен.
+Если вы получаете файл из AJAX-запроса (в базе данных он лежит в двоичном виде, для его преобразования я использую blob). То для его скачивания используйте функцию downloadFile('файл в двоичном виде', 'mime type', 'имя файла'). Смотрите, вам обязательно нужен сам файл, и его mime type. Mime type как правило лежит в заголовке ответа (Content-Type). Если имя файла не задать, то при скачивании имя файла будет содержать дату в милисекундах с 1970 года. Если вы что-то скачивали через портал гос. услуг, то там файлы качаются также. Если же вам нужно имя как-то конкретно генерить, то задайте 3 параметр, так он не обязателен.
 
 Если нужно открыть файл в новой вкладке то используйте функцию openFile('файл в двоичном виде'). Как правило задача может стоять так, что pdf-файлы мы открываем в новой вкладке, а все остальный файлы нужно скачивать. Соответственно из "Content-Type" мы получаем mime type файла, преобразуем его через 'getFileExtension' и в зависимости от его расширения вызываем или 'getFileExtension', или 'getMimeType'. Тут есть одно но, не все файлы можно открыть в браузере. Документ pdf откроется, а вот ISO-образ нет, он у вас скачается. Тут ничего не поделать.
 
@@ -83,7 +89,7 @@
 
 ## Работа с base64
 
-Для работы с base64 сужествую следующие функции base64Code, base64Encode, base64FileEncode;
+Для работы с base64 существуют следующие функции base64Code, base64Encode, base64FileEncode;
 
 - base64Code('Текст') - преобразует текст в формат base64, как правило это нужно если вы из формы пароль отправляете при регистрации. Но это не всегда нужно, но так бывает;
 - base64Encode('Текст') - преобразует base64 в текст, как правило если вы по AJAX-запросу получаете пароль, вам его нужно декодировать в обычный текст. Или галочка "запомнить меня", тут вам эта функция пригодится;
@@ -97,17 +103,18 @@
 
 ## Скачивание CSV-файла
 
-На первый взгляд это простая задача. Что может быть проще, чем сгенерить CSV на javascript-е? но когда я начал ее решать, у меня возникло много проблем.
+На первый взгляд это простая задача. Что может быть проще, чем сгенерить CSV на javascript-е, но когда я начал ее решать, у меня возникло много проблем.
 
-Первая проблема была с кодировкой. Все примеры в сети были с англоязычных форумов. У них все работало хорошо. В моем случае текст содержал кирилицу, в общем он не отображался как нужно в excel-е. После получаса поисков, решение я нашел, нужно было подставить 3 символа для BOM-кодировки.
+Первая проблема была с кодировкой. Все примеры в сети были с англоязычных форумов. У них все работало хорошо. В моем случае текст содержал кирилицу, как следствие он не отображался как нужно в excel-е. После получаса поисков, решение я нашел, нужно было подставить 3 символа для BOM-кодировки.
 
-Вторая проблема заключалась в том, что текст был в одну колонку. Тут мне помогли ребята. В общем нужно было использовать в качестве разделителя ";".
+Вторая проблема заключалась в том, что текст был в одну колонку. Тут мне помогли ребята. Нужно было использовать в качестве разделителя ";".
 
-В общем стало понятно, что это случай для моей библиотеки. Для того, чтобы сгенерить CSV-файл в моей библиотеке есть функция downloadCSV. Она принимает 2 параметра, массив массивов из которых я буду строить CSV-файл, и имя файла. Имя файла не обязательный параметр. Если его не задавать, будет подставлено время в милисекундах с 1970 года. Давайте я лучше покажу пример для наглядности.
+В общем стало понятно, что это случай для моей библиотеки. Для того, чтобы сгенерить CSV-файл в моей библиотеке есть функция downloadCSV. Она принимает 2 параметра, массив массивов, из которых я буду строить CSV-файл, и имя файла. Имя файла не обязательный параметр. Если его не задавать, будет подставлено время в милисекундах с 1970 года. Давайте я лучше покажу пример для наглядности.
 
 ```
 import { downloadCSV } from 'work-with-net';
-const csvARR = [
+
+const csvArr = [
   [1, 2, 3],
   ['какой-то текст 1', '"' + 'какой-то ; \\n текст 2' + '"', 'какой-то текст 3'],
   [1, 2, 3],
@@ -116,11 +123,33 @@ const csvARR = [
 downloadCSV(csv, 'example');
 ```
 
+Как видно из примера, каждый массив в csvArr это строка итогового CSV-файла. Естественно все управляющие символы должны быть экранированы, если в вашей строке есть ";", то вам нужно будет сделать по примеру второго массива.
+
+Если вы подключили библиотеку, а не отдельные модули, то итоговый код будет выглядеть так:
+
+```
+import workWithNet from 'work-with-net';
+
+const csvArr = [
+  [1, 2, 3],
+  ['какой-то текст 1', '"' + 'какой-то ; \\n текст 2' + '"', 'какой-то текст 3'],
+  [1, 2, 3],
+];
+
+workWithNet.downloadCSV(csv, 'example');
+```
+
 ## work-with-net
 
 Library for working with data received from the network. Very often, when working with AJAX requests, we receive data in base64 format, or data in binary format. You won't be able to display them just like that. This library contains modules that convert file extensions to mime types, mime types to regular file extensions. Modules that allow you to download files received by an AJAX request, open this data in a new tab, work with base64.
 
-In order to install this library, you need to type "npm install work-with-net --save-dev" in the console. After installation, you can include both the library itself and its specific modules.
+In order to install this library, you need to type in the console:
+
+```
+npm install work-with-net --save-dev
+```
+
+After installation, you can include both the library itself and its specific modules.
 
 - Connecting separate modules - import {downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode} from "work-with-net";
 - Or include the entire library - import workWithNet from "work-with-net";
@@ -212,3 +241,42 @@ If you have included a library, and not individual modules, then:
 - workWithNet.base64Code('Text') - converts text to base64 format;
 - workWithNet.base64Encode('Text') - converts base64 to text;
 - workWithNet.base64FileEncode('base64', 'media type', 'encoding') - display the file in base64 format.
+
+
+## Download CSV file
+
+At first glance, this is a simple problem. What could be easier than generating a CSV in javascript, but when I started solving it, I had a lot of problems.
+
+The first problem was with the encoding. All examples on the net were from English-language forums. They all worked well. In my case, the text contained Cyrillic, as a result, it was not displayed as it should be in excel. After half an hour of searching, I found a solution, I had to substitute 3 characters for the BOM encoding.
+
+The second problem was that the text was in one column. The guys here helped me. It was necessary to use ";" as a separator.
+
+In general, it became clear that this is the case for my library. In order to generate a CSV file in my library there is a downloadCSV function. It takes 2 parameters, an array of arrays from which I will build the CSV file, and a file name. The filename is optional. If it is not set, the time in milliseconds since 1970 will be substituted. Let me give you a better example to illustrate.
+
+```
+import { downloadCSV } from 'work-with-net';
+
+const csvArr = [
+  [1, 2, 3],
+  ['какой-то текст 1', '"' + 'какой-то ; \\n текст 2' + '"', 'какой-то текст 3'],
+  [1, 2, 3],
+];
+
+downloadCSV(csv, 'example');
+```
+
+As you can see from the example, each array in csvArr is a line in the resulting CSV file. Naturally, all control characters must be escaped, if your string contains ";", then you will need to follow the example of the second array.
+
+If you included the library, and not individual modules, then the final code will look like this:
+
+```
+import workWithNet from 'work-with-net';
+
+const csvArr = [
+  [1, 2, 3],
+  ['какой-то текст 1', '"' + 'какой-то ; \\n текст 2' + '"', 'какой-то текст 3'],
+  [1, 2, 3],
+];
+
+workWithNet.downloadCSV(csv, 'example');
+```
