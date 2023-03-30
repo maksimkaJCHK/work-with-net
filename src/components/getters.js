@@ -3,20 +3,24 @@ import allMimeType from '../allMymeType/all-mime-type.js';
 
 const mainGetFileExtension = (mimeType) => {
   return function(type) {
-    let curType = mimeType.filter(el => el.mimeT == type);
-    if(curType.length) {
+    const curType = mimeType.filter(el => el.mimeT == type);
+
+    if (curType.length) {
       return curType[0].doc;
     }
+
     return null;
   }
 }
 
 const mainGetMimeType = (mimeType) => {
   return function(doc) {
-    let curType = mimeType.filter(el => el.doc == doc);
-    if(curType.length) {
+    const curType = mimeType.filter(el => el.doc == doc);
+
+    if (curType.length) {
       return curType[0].mimeT;
     }
+
     return null;
   }
 }

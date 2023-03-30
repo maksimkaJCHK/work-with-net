@@ -1,6 +1,6 @@
 {
   "name": "work-with-net",
-  "version": "0.0.2",
+  "version": "0.1.1",
   "description": "Library for work with net in browser",
   "main": "lib/work-with-net.js",
   "scripts": {
