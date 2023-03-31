@@ -8,6 +8,7 @@ import {
   base64FileEncode,
   downloadCSV,
   convertBase64ToBinary,
+  downFilebyExt,
 } from '../prelib/work-with-net-standard.js';
 
 const workWithNet = {
@@ -20,6 +21,7 @@ const workWithNet = {
   base64FileEncode,
   downloadCSV,
   convertBase64ToBinary,
+  downFilebyExt,
 };
 
 export {
@@ -32,6 +34,7 @@ export {
   base64FileEncode,
   downloadCSV,
   convertBase64ToBinary,
+  downFilebyExt,
 };
 
 export default workWithNet;

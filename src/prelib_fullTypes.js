@@ -1,5 +1,5 @@
 import { getFullFileExtension as getFileExtension, getFullMimeType as getMimeType } from './components/getters.js';
-import { downloadFile as df, downloadCSV } from './components/services.js';
+import { downloadFile as df, downloadCSV, downFilebyExt } from './components/services.js';
 import { openFile } from './components/services.js';
 import { base64Code, base64Encode, base64FileEncode, convertBase64ToBinary } from './base64/index.js';
 
@@ -14,5 +14,6 @@ export {
   base64Encode,
   base64FileEncode,
   downloadCSV,
-  convertBase64ToBinary
+  convertBase64ToBinary,
+  downFilebyExt
 };
