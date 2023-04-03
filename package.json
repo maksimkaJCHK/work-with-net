@@ -15,7 +15,16 @@
     "mime-types",
     "mime-types js",
     "mime-types javascript",
-    "mime-types javascript library"
+    "mime-types javascript library",
+    "download CSV",
+    "CSV",
+    "download file",
+    "open file in new tab",
+    "convert base64 in binary",
+    "encode base64",
+    "decode base64",
+    "get mime type by extension",
+    "get extension by mime type"
   ],
   "author": "Maksim Zhuchkov",
   "license": "MIT",
