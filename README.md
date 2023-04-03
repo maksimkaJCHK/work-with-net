@@ -5,7 +5,7 @@
 Для того, чтобы установить данную библиотеку необходимо в консоли набрать:
 
 ```
-npm install work-with-net --save-dev
+npm i work-with-net
 ```
 
 После установки вы можете подключать как саму библиотеку, так и конкретные ее модули.
@@ -125,7 +125,7 @@ const csvArr = [
   [1, 2, 3],
 ];
 
-downloadCSV(csv, 'example');
+downloadCSV(csvArr, 'example');
 ```
 
 Как видно из примера, каждый массив в csvArr - это строка итогового CSV-файла. Естественно все управляющие символы должны быть экранированы, если в вашей строке есть ";", то вам нужно будет сделать по примеру второго массива.
@@ -141,7 +141,7 @@ const csvArr = [
   [1, 2, 3],
 ];
 
-workWithNet.downloadCSV(csv, 'example');
+workWithNet.downloadCSV(csvArr, 'example');
 ```
 
 ## work-with-net
@@ -151,7 +151,7 @@ Library for working with data received from the network. Very often, when workin
 In order to install this library, you need to type in the console:
 
 ```
-npm install work-with-net --save-dev
+npm i work-with-net
 ```
 
 After installation, you can include both the library itself and its specific modules.
@@ -271,7 +271,7 @@ const csvArr = [
   [1, 2, 3],
 ];
 
-downloadCSV(csv, 'example');
+downloadCSV(csvArr, 'example');
 ```
 
 As you can see from the example, each array in csvArr is a line in the resulting CSV file. Naturally, all control characters must be escaped, if your string contains ";", then you will need to follow the example of the second array.
@@ -287,5 +287,5 @@ const csvArr = [
   [1, 2, 3],
 ];
 
-workWithNet.downloadCSV(csv, 'example');
+workWithNet.downloadCSV(csvArr, 'example');
 ```
