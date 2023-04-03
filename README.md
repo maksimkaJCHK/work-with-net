@@ -10,12 +10,12 @@ npm install work-with-net --save-dev
 
 После установки вы можете подключать как саму библиотеку, так и конкретные ее модули.
 
-- Подключение отдельных модулей - import { downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode, downloadCSV, convertBase64ToBinary } from "work-with-net";
+- Подключение отдельных модулей - import { downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode, downloadCSV, convertBase64ToBinary, downloadFileByExt } from "work-with-net";
 - Или подключите всю библиотеку - import workWithNet from "work-with-net";
 
 По умолчанию моя библиотека содержит порядка 800 mime types, спасибо за это [Robert Kieffer](https://github.com/broofa/mime). Это достаточно много, но работать будет вообще для всего. Размер правда при этом будет около 40kb. Если же вам нужны стандартные расширения, то подключите самые распространенные типы:
 
-- Подключение отдельных модулей - import { downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode, downloadCSV, convertBase64ToBinary } from "work-with-net/lib/work-with-net-standard.js";
+- Подключение отдельных модулей - import { downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode, downloadCSV, convertBase64ToBinary, downloadFileByExt } from "work-with-net/lib/work-with-net-standard.js";
 - Или подключите всю библиотеку - import workWithNet from "work-with-net/lib/work-with-net-standard.js";
 
 При таком подключении размер будет около 3kb. Тут только самые типовые расширения. Первоначально у меня стояла задача сделать чат для работы с менеджером, предполагалось, что пользователь через этот чат будет переписываться с менеджером, загружать или скачивать от него документы. Список расширений мне предоставили, я его не много дополнил. Давайте я его приложу:
@@ -64,7 +64,7 @@ npm install work-with-net --save-dev
 
 Если вам нужна поддержка IE 11 то подключите библиотеку следующим образом:
 
-- Подключение отдельных модулей - import { downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode, downloadCSV, convertBase64ToBinary } from "work-with-net/lib/ie/work-with-net-standard.js";
+- Подключение отдельных модулей - import { downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode, downloadCSV, convertBase64ToBinary, downloadFileByExt } from "work-with-net/lib/ie/work-with-net-standard.js";
 - Или подключите всю библиотеку - import workWithNet from "work-with-net/lib/ie/work-with-net-standard.js";
 
 Сразу хочу сказать, для 11 IE я не проверял, подключайте на свой риск.
@@ -82,10 +82,13 @@ npm install work-with-net --save-dev
 
 Если нужно открыть файл в новой вкладке то используйте функцию openFile('файл в двоичном виде'). Как правило задача может стоять так, что pdf-файлы мы открываем в новой вкладке, а все остальный файлы нужно скачивать. Соответственно из "Content-Type" мы получаем mime type файла, преобразуем его через 'getFileExtension' и в зависимости от его расширения вызываем или 'getFileExtension', или 'getMimeType'. Тут есть одно но, не все файлы можно открыть в браузере. Документ pdf откроется, а вот ISO-образ нет, он у вас скачается. Тут ничего не поделать.
 
+Бывают такие случаи, что для скачивания файла вам не нужно знать его mime type. К примеру вы заранее знаете, что к вам по AJAX запросу придут jpeg-картинки. Или другой вариант, вам нужно сгенерить torrent-файл. Для этого есть функция downloadFileByExt('файл в двоичнов виде, 'его расширение', 'имя файла'). Смотрие, вам необходим сам файл, расширение по умолчанию у меня стоит jpeg (если вам нужно сгенерить jpeg, то можно расширение не задавать). Имя файла тоже не обязательный параметр. Если имя файла не задать, то при скачивании имя файла будет содержать дату в милисекундах с 1970 года. Эта функция будет работать быстрее чем downloadFile, так как под капотом не будет вычисляться расширение файла.
+
 Если вы подключили библиотеку, а не отдельные модули, то:
 
 - workWithNet.downloadFile('файл в двоичном виде', 'mime type', 'имя файла') - скачать файл;
 - workWithNet.openFile('файл в двоичном виде') - открыть файл в новой вкладке.
+- workWithNet.downloadFileByExt('файл в двоичнов виде, 'его расширение', 'имя файла') - скачать файл если вы знаете его расширение.
 
 ## Работа с base64
 
@@ -153,12 +156,12 @@ npm install work-with-net --save-dev
 
 After installation, you can include both the library itself and its specific modules.
 
-- Connecting separate modules - import {downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode, downloadCSV, convertBase64ToBinary } from "work-with-net";
+- Connecting separate modules - import {downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode, downloadCSV, convertBase64ToBinary, downloadFileByExt } from "work-with-net";
 - Or include the entire library - import workWithNet from "work-with-net";
 
 By default, my library contains about 800 mime types, thanks for that [Robert Kieffer](https://github.com/broofa/mime). That's a lot, but it will work for everything. The size, however, will be about 40kb. If you need standard extensions, then connect the most common types:
 
-- Connecting individual modules - import {downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode, downloadCSV, convertBase64ToBinary} from "work-with-net / lib / work-with-net-standard.js";
+- Connecting individual modules - import {downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode, downloadCSV, convertBase64ToBinary, downloadFileByExt } from "work-with-net / lib / work-with-net-standard.js";
 - Or include the entire library - import workWithNet from "work-with-net / lib / work-with-net-standard.js";
 
 With this connection, the size will be approx 3kb. There are only the most typical extensions. Initially, my task was to make a chat for working with a manager, it was assumed that the user through this chat would correspond with the manager, upload or download documents from him. The list of extensions was provided to me, I did not add much to it. Let me attach it:
@@ -207,7 +210,7 @@ As you can see, these are the most common extensions for working with documents,
 
 If you need support for IE 11, then include the library as follows:
 
-- Connecting individual modules - import {downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode, downloadCSV, convertBase64ToBinary} from "work-with-net / lib / ie / work-with-net-standard.js";
+- Connecting individual modules - import {downloadFile, openFile, getFileExtension, getMimeType, base64Code, base64Encode, base64FileEncode, downloadCSV, convertBase64ToBinary, downloadFileByExt } from "work-with-net / lib / ie / work-with-net-standard.js";
 - Or include the entire library - import workWithNet from "work-with-net / lib / ie / work-with-net-standard.js";
 
 I want to say right away that I did not check for 11 IE, connect at your own risk.
@@ -225,10 +228,13 @@ If you get a file from an AJAX request (it is in binary in the database, I use b
 
 If you need to open a file in a new tab, then use the openFile function ('file in binary'). As a rule, the task can be such that we open pdf-files in a new tab, and all other files need to be downloaded. Accordingly, from the "Content-Type" we get the mime type of the file, transform it via 'getFileExtension' and, depending on its extension, call either 'getFileExtension' or 'getMimeType'. There is one thing, but not all files can be opened in a browser. The pdf document will open, but the ISO image is not, it will be downloaded from you. There is nothing you can do about it.
 
+There are times when you don't need to know its mime type to download a file. For example, you know in advance that jpeg images will come to you by AJAX request. Or another option, you need to generate a torrent file. To do this, there is a function downloadFileByExt('file in binary form, 'its extension', 'file name'). Look, you need the file itself, the default extension is jpeg (if you need to generate jpeg, then you can not set the extension). The filename is also optional. If you don't specify a filename, the downloaded filename will contain the date in milliseconds since 1970. This function will be faster than downloadFile because the file extension will not be calculated under the hood.
+
 If you have included a library, and not individual modules, then:
 
 - workWithNet.downloadFile('binary file', 'mime type', 'file name') - download file;
 - workWithNet.openFile('binary file') - open the file in a new tab.
+- workWithNet.downloadFileByExt('binary file, 'its extension', 'file name') - download a file if you know its extension.
 
 ## Working with base64
 

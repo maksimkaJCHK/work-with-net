@@ -28,7 +28,7 @@ export const openFile = (file) => {
   window.open(objectUrl);
 }
 
-export const downFilebyExt = (file, extension, name = new Date().getTime()) => {
+export const downloadFileByExt = (file, extension = 'jpeg', name = new Date().getTime()) => {
   const url = window.URL.createObjectURL(new Blob([file]));
 
   downloadFileFunc(url, extension, name);
