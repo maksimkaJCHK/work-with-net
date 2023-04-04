@@ -1,6 +1,6 @@
 {
   "name": "work-with-net",
-  "version": "0.2.1",
+  "version": "0.3.1",
   "description": "Library for work with net in browser",
   "main": "lib/work-with-net.js",
   "scripts": {
@@ -24,7 +24,9 @@
     "encode base64",
     "decode base64",
     "get mime type by extension",
-    "get extension by mime type"
+    "get extension by mime type",
+    "get mime type from extension",
+    "get extension from mime type"
   ],
   "author": "Maksim Zhuchkov",
   "license": "MIT",
